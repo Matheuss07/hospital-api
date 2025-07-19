@@ -28,7 +28,12 @@ export default (sequelize) => {
             }
         },
 
-    });
+    },
+        {
+            tableName: 'pacientes',
+            timestamps: false,
+        }
+    );
 
     return Pacientes;
 }

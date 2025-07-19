@@ -14,9 +14,14 @@ export default (sequelize) => {
         descricao: {
             type: DataTypes.STRING(255),
             allowNull: false //O prontuário deverá ao menos ter uma descricao
-        }
+        },
 
-    });
+    },
+        {
+            tableName: 'prontuario',
+            timestamps: false,
+        }
+    );
 
     Prontuario.associate = (models) => { //Relacionamento de duas tabelas
         Prontuario.belongsTo(models.Pacientes, { foreignKey: 'pacientesid' });
