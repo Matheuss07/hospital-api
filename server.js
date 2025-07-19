@@ -28,5 +28,5 @@ const startServer = async () => {
     await sequelize.close();
   }
 };
+startServer(); 
 
-startServer();
