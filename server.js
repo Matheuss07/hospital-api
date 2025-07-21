@@ -1,32 +1,44 @@
 import express from 'express';
-import { sequelize, Prontuario, Medico, Paciente, Especialidade, Consulta } from './models/index.js';
-import pacientes from './models/pacientes.js';
+import bodyParser from 'body-parser';
+import sequelize from './config/db.js';
+
+// Importa os modelos para garantir que eles sejam carregados
+import './models/index.js'; // ou importe os modelos individualmente, se necessário
+
+// Importação das rotas
+import consultaRouter from './routers/consultaRouters.js';
+import especialidadeRouter from './routers/especialidadeRouters.js';
+import medicosRouter from './routers/medicosRouters.js';
+import pacientesRouter from './routers/pacientesRouters.js';
+import prontuarioRouter from './routers/prontuarioRouters.js';
+/* import receitasRouter from './routers/receitasRouters.js'; */
 
 const app = express();
-app.use(express.json());
+const port = process.env.PORT || 3000;
 
-// Rotas (você pode importar e usar os arquivos de rotas separados aqui)
+app.use(bodyParser.json());
 
-// Inicializa o banco e inicia o servidor
-const startServer = async () => {
-  try {
-    await sequelize.authenticate();
-    console.log('✅ Conexão com o banco de dados estabelecida com sucesso.');
+// Rota simples para checagem
+app.get('/version', (req, res) => {
+  res.json({ status: 'ok', version: '1.0.0' });
+});
 
-    await sequelize.sync({ alter: true });
-    console.log('✅ Tabelas sincronizadas com sucesso.');
+// Rotas principais
+app.use('/consultas', consultaRouter);
+app.use('/especialidades', especialidadeRouter);
+app.use('/medicos', medicosRouter);
+app.use('/pacientes', pacientesRouter);
+app.use('/prontuarios', prontuarioRouter);
+/* app.use('/receitas', receitasRouter); */
 
-    const paciente = await Paciente.create({
-        nome:'Matheus Luna',
-        email:'msl@gmail.com',
-        senha:'testeApi'
-    })
-  } catch (error) {
-    console.error('❌ Erro ao conectar ou sincronizar o banco de dados:', error);
-  }
-  finally {
-    await sequelize.close();
-  }
-};
-startServer(); 
-
+// Conecta e inicia o servidor
+sequelize.sync({ alter: true })
+  .then(() => {
+    console.log('✅ Banco de dados sincronizado com sucesso.');
+    app.listen(port, () => {
+      console.log(`🚀 Servidor rodando na porta ${port}`);
+    });
+  })
+  .catch((err) => {
+    console.error('❌ Erro ao sincronizar com o banco:', err);
+  });

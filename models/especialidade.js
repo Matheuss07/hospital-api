@@ -7,14 +7,11 @@ export default (sequelize) => {
             autoIncrement: true,
             primaryKey: true
         },
-        data: {
-            type: DataTypes.DATEONLY,
+        nome: {
+            type: DataTypes.STRING(100),
             allowNull: false 
         },
-        descricao: {
-            type: DataTypes.STRING(255),
-            allowNull: false
-        }
+
 
     });
 

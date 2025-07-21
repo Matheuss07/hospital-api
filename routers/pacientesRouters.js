@@ -16,8 +16,9 @@ router.post('/', async (req, res) => {
   try {
     const novo = await Paciente.create(req.body);
     res.status(201).json(novo);
-  } catch (err) {
-    res.status(400).json({ error: 'Erro ao criar paciente' });
+  } catch (error) {
+    console.error('Erro ao criar paciente:', error); 
+    res.status(400).json({ error: error.message }); 
   }
 });
 

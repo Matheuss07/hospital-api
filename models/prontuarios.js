@@ -23,10 +23,10 @@ export default (sequelize) => {
         }
     );
 
-    Prontuario.associate = (models) => { //Relacionamento de duas tabelas
+/*     Prontuario.associate = (models) => { //Relacionamento de duas tabelas
         Prontuario.belongsTo(models.Pacientes, { foreignKey: 'pacientesid' });
         Prontuario.belongsTo(models.Medicos, { foreignKey: 'medicosid' });
-    };
+    }; */
 
     return Prontuario;
 }

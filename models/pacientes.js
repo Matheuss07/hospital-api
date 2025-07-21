@@ -23,7 +23,7 @@ export default (sequelize) => {
             allowNull: true,
         },
         senha: {
-            type: DataTypes.STRING(8),
+            type: DataTypes.STRING(100),
             allowNull: false,
             validate: {
                 len: {
