@@ -1,5 +1,5 @@
  import * as models from '../models/index.js';
-    import sequelize from '../config/database.js';
+    import sequelize from '../config/db.js';
 
     const db = { ...models }; // Copia os modelos diretamente
 

@@ -1,4 +1,4 @@
-import sequelize from '../config/database.js'; // Ajuste o caminho se necessário
+import sequelize from '../config/db.js'; // Ajuste o caminho se necessário
 
 async function testSync() {
   try {

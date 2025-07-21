@@ -15,7 +15,7 @@ describe('Configuração do Ambiente de Testes', () => {
     });
 
     expect(Paciente).to.have.property('id');
-    expect(Paciente.login).to.equal('teste123@gmail.com');
+    expect(Paciente.email).to.equal('teste123@gmail.com');
     expect(Paciente.nome).to.equal('Usuário Teste');
   });
 });
