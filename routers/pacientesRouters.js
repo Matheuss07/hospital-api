@@ -1,30 +1,24 @@
-/* import express from 'express';
-import  Paciente  from '../models/index.js'
-import { Op }  from 'sequelize';
+import { Router } from 'express';
+import { Paciente } from '../models/index.js';
 
-const router = express.Router();
+const router = Router();
 
-router.get('/search', async (req, res) => {
-console.log('search')
-  const { q } = req.query;
-  if (!q) {
-    return res.status(400).json({ error: 'Parâmetro "q" é obrigatório' });
-  }
-
+router.get('/', async (req, res) => {
   try {
-    const paciente = await Paciente.findAll({
-      where: {
-        [Op.or]: [
-          { nome: { [Op.iLike]: `%${q}%` } },
-          { email: { [Op.iLike]: `%${q}%` } },
-          { senha: { [Op.iLike]: `%${q}%` } },
-        ],
-      },
-    });
-
-    res.json(paciente);
+    const pacientes = await Paciente.findAll();
+    res.json(pacientes);
   } catch (err) {
-    res.status(500).json({ error: 'Error na busca', details: err });
+    res.status(500).json({ error: 'Erro ao buscar pacientes' });
   }
+});
 
-}) */
+router.post('/', async (req, res) => {
+  try {
+    const novo = await Paciente.create(req.body);
+    res.status(201).json(novo);
+  } catch (err) {
+    res.status(400).json({ error: 'Erro ao criar paciente' });
+  }
+});
+
+export default router;
