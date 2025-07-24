@@ -50,3 +50,4 @@ describe('Modelo Prontuario', () => {
     expect(associado.id).to.equal(paciente.id);
   });
 });
+//fim

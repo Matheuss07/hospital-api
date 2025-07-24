@@ -36,3 +36,4 @@ describe('Modelo Especialidade', () => {
     expect(medicos[0].nome).to.equal('Doutora Ana');
   });
 });
+//fim
