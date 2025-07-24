@@ -12,24 +12,45 @@ const Especialidade = especialidadeModel(sequelize);
 const Consulta = consultaModel(sequelize);
 const Prontuario = prontuariosModel(sequelize);
 
-// Relacionamentos
+// RELACIONAMENTOS
 
 // Médico pertence a uma especialidade
-Medico.belongsTo(Especialidade);
-Especialidade.hasMany(Medico);
+Medico.belongsTo(Especialidade, {
+  foreignKey: 'EspecialidadeId',
+  as: 'especialidade'
+});
+Especialidade.hasMany(Medico, {
+  foreignKey: 'EspecialidadeId',
+  as: 'medicos'
+});
 
-// Consulta pertence a um paciente e um médico
-Consulta.belongsTo(Paciente);
-Consulta.belongsTo(Medico);
-Paciente.hasMany(Consulta);
-Medico.hasMany(Consulta);
+// Consulta pertence a um paciente e a um médico
+Consulta.belongsTo(Paciente, {
+  foreignKey: 'pacienteId',
+  as: 'paciente'
+});
+Consulta.belongsTo(Medico, {
+  foreignKey: 'medicoId',
+  as: 'medico'
+});
+Paciente.hasMany(Consulta, {
+  foreignKey: 'pacienteId',
+  as: 'consultas'
+});
+Medico.hasMany(Consulta, {
+  foreignKey: 'medicoId',
+  as: 'consultas'
+});
 
 // Prontuário pertence a um paciente
-Prontuario.belongsTo(Paciente);
-Paciente.hasOne(Prontuario); // supondo que tenha só um prontuário por paciente
-
-// Sincroniza os models com o banco (opcional aqui)
-await sequelize.sync({ alter: true }); // ou { force: true } para reiniciar tudo
+Prontuario.belongsTo(Paciente, {
+  foreignKey: 'pacienteId',
+  as: 'paciente'
+});
+Paciente.hasOne(Prontuario, {
+  foreignKey: 'pacienteId',
+  as: 'prontuario'
+});
 
 // Exporta os models para uso nas rotas/controllers
 export {
@@ -38,6 +59,5 @@ export {
   Paciente,
   Especialidade,
   Consulta,
-  Prontuario,
-  //Receitas
+  Prontuario
 };

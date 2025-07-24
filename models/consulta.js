@@ -11,9 +11,9 @@ export default (sequelize) => {
             type: DataTypes.DATEONLY,
             allowNull: false 
         },
-            hora:{
-                type:DataTypes.TIME,
-                allowNull:false
+        hora:{
+            type:DataTypes.TIME,
+            allowNull:false
         },
         descricao: {
             type: DataTypes.STRING(255),
